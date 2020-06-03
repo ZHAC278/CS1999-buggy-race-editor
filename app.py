@@ -34,11 +34,14 @@ def create_buggy():
       qty_tyres = request.form['qty_tyres']
       tyres = request.form['tyres']
       power_type = request.form['power_type']
-      msg = f"flag-color={flag_color}", "flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}", "qty_wheels={qty_wheels}", "qty_tyres={qty_tyres}", "tyres={tyres}", "power_type={power_type}"
+      power_units = request.form['power_units']
+      aux_power_type = request.form['aux_power_type']
+      aux_power_units = request.form['aux_power_units']
+      msg = f"flag-color={flag_color}", "flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}", "qty_wheels={qty_wheels}", "qty_tyres={qty_tyres}", "tyres={tyres}", "power_type={power_type}", "power_units={power_units}", "aux_power_type={aux_power_type}", "aux_power_units={aux_power_units}"
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=? WHERE id=?", 
-                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres,power_type, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=? WHERE id=?", 
+                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except Exception as e:
