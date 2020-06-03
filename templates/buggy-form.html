@@ -6,9 +6,6 @@
 
   <h1>Make buggy</h1>
   <form action="/new" method="post">
-    <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" />
-    <br>
     <label for="flag_color">Colour of flag:</label>
     <input type="text" name="flag_color" />
     <br>
@@ -17,6 +14,21 @@
     <br>
     <label for="flag_pattern">Flag pattern:</label>
     <input type="text" name="flag_pattern" />
+    <br>
+    <label for="qty_wheels">Number of wheels:</label>
+    <input type="text" name="qty_wheels" />
+    <br>
+    <label for="qty_tyres">Number of tyres:</label>
+    <input type="text" name="qty_tyres" />
+    <br>
+    <label for="tyres">Type of tyres:</label>
+    <select name="tyres" id="tyres">
+        <option value="knobbly">Knobbly</option>
+        <option value="slick">Slick</option>
+        <option value="steelband">Steelband</option>
+        <option value="reactive">Reactive</option>
+        <option value="maglev">Magnetic Levitation</option>
+    </select>
     <br>
     <input type="submit" class="button">
   </form>

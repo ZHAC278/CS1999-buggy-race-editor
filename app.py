@@ -27,14 +27,17 @@ def create_buggy():
   elif request.method == 'POST':
     msg=""
     try:
-      qty_wheels = request.form['qty_wheels']
       flag_color = request.form['flag_color']
       flag_color_secondary = request.form['flag_color_secondary']
       flag_pattern = request.form['flag_pattern']
-      msg = f"qty_wheels={qty_wheels}", "flag-color={flag_color}", "flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}"
+      qty_wheels = request.form['qty_wheels']
+      qty_tyres = request.form['qty_tyres']
+      tyres = request.form['tyres']
+      msg = f"flag-color={flag_color}", "flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}", "qty_wheels={qty_wheels}", "qty_tyres={qty_tyres}", "tyres={tyres}"
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set qty_wheels=?, flag_color=?, flag_color_secondary=?, flag_pattern=? WHERE id=?", (qty_wheels, flag_color, flag_color_secondary, flag_pattern, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=? WHERE id=?", 
+                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except Exception as e:
