@@ -39,7 +39,7 @@ con.execute("""
     tyres                 VARCHAR(20),
     armour                VARCHAR(20),
     attack                VARCHAR(20),
-    qty_attack            VARCHAR(20),
+    qty_attacks            VARCHAR(20),
     fireproof             VARCHAR(20),
     insulated             VARCHAR(20),
     antibiotic            VARCHAR(20),    

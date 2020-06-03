@@ -37,11 +37,20 @@ def create_buggy():
       power_units = request.form['power_units']
       aux_power_type = request.form['aux_power_type']
       aux_power_units = request.form['aux_power_units']
-      msg = f"flag-color={flag_color}", "flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}", "qty_wheels={qty_wheels}", "qty_tyres={qty_tyres}", "tyres={tyres}", "power_type={power_type}", "power_units={power_units}", "aux_power_type={aux_power_type}", "aux_power_units={aux_power_units}"
+      hamster_booster = request.form['hamster_booster']
+      armour = request.form['armour']
+      attack  = request.form['attack']
+      qty_attacks = request.form['qty_attacks']
+      fireproof = request.form['fireproof']
+      insulated = request.form['insulated']
+      antibiotic = request.form['antibiotic']
+      banging = request.form['banging']
+      algo = request.form['algo']
+      msg = f"flag-color={flag_color}", #"flag_color_secondary={flag_color_secondary}", "flag_pattern={flag_pattern}", "qty_wheels={qty_wheels}", "qty_tyres={qty_tyres}", "tyres={tyres}", "power_type={power_type}", "power_units={power_units}", "aux_power_type={aux_power_type}", "aux_power_units={aux_power_units}"
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=? WHERE id=?", 
-                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, DEFAULT_BUGGY_ID))
+        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?", 
+                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, DEFAULT_BUGGY_ID))
         con.commit()
         msg = "Record successfully saved"
     except Exception as e:
