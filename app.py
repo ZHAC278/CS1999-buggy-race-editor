@@ -37,6 +37,9 @@ def create_buggy():
         msg = f"Wheels need to be an even number!:{qty_wheels}"
         return render_template("buggy-form.html", msg = msg)
     qty_tyres = request.form['qty_tyres']
+    if qty_wheels>qty_tyres:
+        msg = f"Quantity of tyres must be equal to or greater than the number of wheels! : {qty_tyres}"
+        return render_template("buggy-form.html", msg = msg)
     tyres = request.form['tyres']
     power_type = request.form['power_type']
     power_units = request.form['power_units']
