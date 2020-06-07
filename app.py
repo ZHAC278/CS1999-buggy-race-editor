@@ -86,9 +86,29 @@ def show_buggies():
   record = cur.fetchone(); 
   price_tyres = {"knobbly":15, "slick":10, "steelband":20, "reactive":40, "maglev":50}
   cost_tyres = price_tyres[record["tyres"]]*int(record["qty_tyres"])
-  price_primary_power = {"petrol":4, "fusion":400, "steam":3, "bio":5, "electric":20, "rocket":16, "hamster":3, "thermo":300, "solar":40, "wind":20}
-  cost_primary_power = price_primary_power[record["power_type"]]*int(record["power_units"])
-  return render_template("buggy.html", buggy = record, cost_tyres=cost_tyres, cost_primary_power=cost_primary_power)
+  price_power = {"petrol":4, "fusion":400, "steam":3, "bio":5, "electric":20, "rocket":16, "hamster":3, "thermo":300, "solar":40, "wind":20}
+  cost_primary_power = price_power[record["power_type"]]*int(record["power_units"])
+  cost_backup_power = price_power[record["aux_power_type"]]*int(record["aux_power_units"])
+  price_hamster_booster = 5
+  cost_hamster_booster = price_hamster_booster*int(record["hamster_booster"])
+  price_armour = {"none":0, "wood":40, "aluminium":200, "thinsteel":100, "thicksteel":200, "titanium":290}
+  wheel_value = int(record["qty_wheels"])-4
+  if wheel_value>0:
+      cost_armour = price_armour[record["armour"]]+(price_armour[record["armour"]]*(wheel_value*0.1))
+  else:
+      cost_armour = price_armour[record["armour"]]
+  price_offence = {"none":0, "spike":5, "flame":20, "charge":28, "biohazard":30}
+  cost_offence = price_offence[record["attack"]]*int(record["qty_attacks"])
+  price_fireproof = {"yes":70, "no":0}
+  cost_fireproof = price_fireproof[record["fireproof"]]
+  price_insulated = {"yes":100, "no":0}
+  cost_insulated = price_insulated[record["insulated"]]
+  price_antibiotic = {"yes":90, "no":0}
+  cost_antibiotic = price_antibiotic[record["antibiotic"]]
+  price_banging = {"yes":42, "no":0}
+  cost_banging = price_banging[record["banging"]]
+  total_cost = cost_tyres+cost_primary_power+cost_backup_power+cost_hamster_booster+cost_armour+cost_offence+cost_fireproof+cost_insulated+cost_antibiotic+cost_banging
+  return render_template("buggy.html", buggy = record, cost_tyres=cost_tyres, cost_primary_power=cost_primary_power, cost_backup_power=cost_backup_power, cost_hamster_booster=cost_hamster_booster, cost_armour=cost_armour, cost_offence=cost_offence, cost_fireproof=cost_fireproof, cost_insulated=cost_insulated, cost_antibiotic=cost_antibiotic, cost_banging=cost_banging, total_cost=total_cost)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
