@@ -84,7 +84,11 @@ def show_buggies():
   cur = con.cursor()
   cur.execute("SELECT * FROM buggies")
   record = cur.fetchone(); 
-  return render_template("buggy.html", buggy = record)
+  price_tyres = {"knobbly":15, "slick":10, "steelband":20, "reactive":40, "maglev":50}
+  cost_tyres = price_tyres[record["tyres"]]*int(record["qty_tyres"])
+  price_primary_power = {"petrol":4, "fusion":400, "steam":3, "bio":5, "electric":20, "rocket":16, "hamster":3, "thermo":300, "solar":40, "wind":20}
+  cost_primary_power = price_primary_power[record["power_type"]]*int(record["power_units"])
+  return render_template("buggy.html", buggy = record, cost_tyres=cost_tyres, cost_primary_power=cost_primary_power)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
