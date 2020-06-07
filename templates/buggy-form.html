@@ -10,10 +10,10 @@
   </p>
   <form action="/new" method="post">
     <label for="flag_color">Colour of flag:</label>
-    <input type="text" name="flag_color" />
+    <input type="text" name="flag_color" value="{{ buggy['flag_color'] }}"/>
     <br>
     <label for="flag_color_secondary">Second colour on flag:</label>
-    <input type="text" name="flag_color_secondary" />
+    <input type="text" name="flag_color_secondary" value="{{ buggy['flag_color_secondary'] }}"/>
     <br>
     <label for="flag_pattern">Type of tyres:</label>
     <select name="flag_pattern" id="flag_pattern">
@@ -26,10 +26,10 @@
     </select>
     <br>
     <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" />
+    <input type="text" name="qty_wheels" value="{{ buggy['qty_wheels'] }}"/>
     <br>
     <label for="qty_tyres">Number of tyres:</label>
-    <input type="text" name="qty_tyres" />
+    <input type="text" name="qty_tyres" value="{{ buggy['qty_tyres'] }}" />
     <br>
     <label for="tyres">Type of tyres:</label>
     <select name="tyres" id="tyres">
@@ -55,7 +55,7 @@
     </select>
     <br>
     <label for="power_units">Number of power units:</label>
-    <input type="text" name="power_units" />
+    <input type="text" name="power_units" value="{{ buggy['power_units'] }}"/>
     <br>
     <label for="aux_power_type">Backup power source:</label>
     <select name="aux_power_type" id="aux_power_type">
@@ -72,10 +72,10 @@
     </select>
     <br>
     <label for="aux_power_units">Number of backup power units:</label>
-    <input type="text" name="aux_power_units" />
+    <input type="text" name="aux_power_units" value="{{ buggy['aux_power_units'] }}" />
     <br>
     <label for="hamster_booster">Number of hamster boosters:</label>
-    <input type="text" name="hamster_booster" />
+    <input type="text" name="hamster_booster" value="{{ buggy['aux_power_units'] }}" />
     <br>
     <label for="armour">Type of armour:</label>
     <select name="armour" id="armour">
@@ -97,7 +97,7 @@
     </select>
     <br>
     <label for="qty_attacks">Number of attacks in race:</label>
-    <input type="text" name="qty_attacks" />
+    <input type="text" name="qty_attacks" value="{{ buggy['qty_attacks'] }}"/>
     <br>
     <label for="fireproof">Fireproof?:</label>
     <select name="fireproof" id="fireproof">
