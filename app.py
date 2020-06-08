@@ -78,6 +78,10 @@ def create_buggy():
     if not qty_attacks.isdigit():
         msg = f"This is not a number!:{qty_attacks}"
         return render_template('buggy-form.html', buggy=request.form, msg = msg)
+    if (attack == "none" \
+        and int(qty_attacks)>0):
+            msg = f"You have no offensive capability : Number of attacks in race"
+            return render_template('buggy-form.html', buggy=request.form, msg = msg)
     fireproof = request.form['fireproof']
     insulated = request.form['insulated']
     antibiotic = request.form['antibiotic']
