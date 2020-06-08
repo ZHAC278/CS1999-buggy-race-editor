@@ -31,29 +31,44 @@ def create_buggy():
     return render_template("buggy-form.html", buggy = record)
   elif request.method == 'POST':
     msg=""
-    flag_color = request.form['flag_color'].strip()
+    flag_color = request.form['flag_color']
     flag_color_secondary = request.form['flag_color_secondary']
     flag_pattern = request.form['flag_pattern']
     qty_wheels = request.form['qty_wheels']
     if not qty_wheels.isdigit():
         msg = f"This is not a number!:{qty_wheels}"
-        return render_template("buggy-form.html", msg = msg)
+        return render_template('updated.html', msg = msg)
     elif int(qty_wheels)%2 != 0:
         msg = f"Wheels need to be an even number!:{qty_wheels}"
-        return render_template("buggy-form.html", msg = msg)
+        return render_template('updated.html', msg = msg)
     qty_tyres = request.form['qty_tyres']
+    if not qty_tyres.isdigit():
+        msg = f"This is not a number!:{qty_tyres}"
+        return render_template("updated.html", msg = msg)
     if qty_wheels>qty_tyres:
         msg = f"Quantity of tyres must be equal to or greater than the number of wheels! : {qty_tyres}"
-        return render_template("buggy-form.html", msg = msg)
+        return render_template("updated.html", msg = msg)
     tyres = request.form['tyres']
     power_type = request.form['power_type']
     power_units = request.form['power_units']
+    if not power_units.isdigit():
+        msg = f"This is not a number!:{power_units}"
+        return render_template("updated.html", msg = msg)
     aux_power_type = request.form['aux_power_type']
     aux_power_units = request.form['aux_power_units']
+    if not aux_power_units.isdigit():
+        msg = f"This is not a number!:{aux_power_units}"
+        return render_template("updated.html", msg = msg)
     hamster_booster = request.form['hamster_booster']
+    #if power_type or aux_power_type != "hamster" and hamster_booster>0:
+     #   msg = f"Hamster boosters only available with hamster power!"
+      #  return render_template("updated.html", msg = msg)
     armour = request.form['armour']
     attack  = request.form['attack']
     qty_attacks = request.form['qty_attacks']
+    if not qty_attacks.isdigit():
+        msg = f"This is not a number!:{qty_attacks}"
+        return render_template("updated.html", msg = msg)
     fireproof = request.form['fireproof']
     insulated = request.form['insulated']
     antibiotic = request.form['antibiotic']
