@@ -4,6 +4,8 @@
 
   <h1>Buggy</h1>
 
+
+{% for buggy in buggies %}
   <table>
    <tr>
      <td>ID:</td> <td> {{ buggy['id'] }} </td> <td> Cost (£) </td>
@@ -24,51 +26,63 @@
      <td>Number of tyres:</td> <td> {{ buggy['qty_tyres'] }} </td> <td>  </td>
    </tr>
    <tr>
-     <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ cost_tyres }} </td>
+     <td>Type of tyres:</td> <td> {{ buggy['tyres'] }} </td> <td> {{ buggy['cost_tyres'] }} </td>
    </tr>
    <tr>
      <td>Primary power source:</td> <td> {{ buggy['power_type'] }} </td> <td>  </td>
    </tr>
    <tr>
-     <td>Number of power units:</td> <td> {{ buggy['power_units'] }} </td> <td> {{ cost_primary_power }} </td>
+     <td>Number of power units:</td> <td> {{ buggy['power_units'] }} </td> <td> {{ buggy['cost_primary_power'] }} </td>
    </tr>
    <tr>
      <td>Backup power source:</td> <td> {{ buggy['aux_power_type'] }} </td> <td>  </td>
    </tr>
    <tr>
-     <td>Number of backup power source:</td> <td> {{ buggy['aux_power_units'] }} </td> <td> {{ cost_backup_power }} </td>
+     <td>Number of backup power source:</td> <td> {{ buggy['aux_power_units'] }} </td> <td> {{ buggy['cost_backup_power'] }} </td>
    </tr>
    <tr>
-     <td>Number of hamster boosters:</td> <td> {{ buggy['aux_power_units'] }} </td> <td> {{ cost_hamster_booster }} </td>
+     <td>Number of hamster boosters:</td> <td> {{ buggy['aux_power_units'] }} </td> <td> {{ buggy['cost_hamster_booster'] }} </td>
    </tr>
    <tr>
-     <td>Type of armour:</td> <td> {{ buggy['armour'] }} </td> <td> {{ cost_armour }} </td>
+     <td>Type of armour:</td> <td> {{ buggy['armour'] }} </td> <td> {{ buggy['cost_armour'] }} </td>
    </tr>
    <tr>
      <td>Offensive capability:</td> <td> {{ buggy['attack'] }} </td> <td> </td>
    </tr>
    <tr>
-     <td>Number of attacks in race:</td> <td> {{ buggy['qty_attacks'] }} </td> <td> {{ cost_offence }} </td>
+     <td>Number of attacks in race:</td> <td> {{ buggy['qty_attacks'] }} </td> <td> {{ buggy['cost_offence'] }} </td>
    </tr>
    <tr>
-     <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td> {{ cost_fireproof }} </td>
+     <td>Fireproof?:</td> <td> {{ buggy['fireproof'] }} </td> <td> {{ buggy['cost_fireproof'] }} </td>
    </tr>
    <tr>
-     <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td> {{ cost_insulated }} </td>
+     <td>Insulated?:</td> <td> {{ buggy['insulated'] }} </td> <td> {{ buggy['cost_insulated'] }} </td>
    </tr>
    <tr>
-     <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td> {{ cost_antibiotic }} </td>
+     <td>Antibiotic?:</td> <td> {{ buggy['antibiotic'] }} </td> <td> {{ buggy['cost_antibiotic'] }} </td>
    </tr>
    <tr>
-     <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td> {{ cost_banging }} </td>
+     <td>Banging sound system?:</td> <td> {{ buggy['banging'] }} </td> <td> {{ buggy['cost_banging'] }} </td>
    </tr>
    <tr>
      <td>Race computer algorithm:</td> <td> {{ buggy['algo'] }} </td> <td> 0 </td>
    </tr>
    <tr>
-     <td>Total cost </td> <td> </td> <td> {{ total_cost }} </td>
+     <td>Total cost </td> <td> </td> <td> {{ buggy['total_cost'] }} </td>
+   </tr>
+   <tr>
+     <td colspan="3"><form action="/edit/{{ buggy['id'] }}" method="get">
+         <button type="submit" name="edit" value="edit" class="btn-link">Edit this buggy</button></form></td>
+   </tr>
+   <tr>
+     <td colspan="3"><form action="/delete/{{ buggy['id'] }}" method="post">
+         <button type="submit" name="delete" value="delete" class="btn-link">Delete this buggy</button></form></td>
+   </tr>
   </table>
 
+{% endfor %}
+
+    
   <p>
     <a href="/" class="button">home</a>
   </p>

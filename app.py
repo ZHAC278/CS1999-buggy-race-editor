@@ -23,14 +23,10 @@ def home():
 @app.route('/new', methods = ['POST', 'GET'])
 def create_buggy():
   if request.method == 'GET':
-    con = sql.connect(DATABASE_FILE)
-    con.row_factory = sql.Row
-    cur = con.cursor()
-    cur.execute("SELECT * FROM buggies")
-    record = cur.fetchone(); 
-    return render_template("buggy-form.html", buggy = record)
+    return render_template("buggy-form.html", buggy=None)
   elif request.method == 'POST':
     msg=""
+    buggy_id = request.form['id']
     flag_color = request.form['flag_color']
     flag_color_secondary = request.form['flag_color_secondary']
     flag_pattern = request.form['flag_pattern']
@@ -91,8 +87,10 @@ def create_buggy():
     try:
       with sql.connect(DATABASE_FILE) as con:
         cur = con.cursor()
-        cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?", 
-                    (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, DEFAULT_BUGGY_ID))
+        if buggy_id.isdigit(): 
+            cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?", (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, buggy_id))
+        else:
+            cur.execute("INSERT INTO buggies (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo))
         con.commit()
         msg = "Record successfully saved"
     except Exception as e:
@@ -111,41 +109,52 @@ def show_buggies():
   con.row_factory = sql.Row
   cur = con.cursor()
   cur.execute("SELECT * FROM buggies")
-  record = cur.fetchone(); 
-  price_tyres = {"knobbly":15, "slick":10, "steelband":20, "reactive":40, "maglev":50}
-  cost_tyres = price_tyres[record["tyres"]]*int(record["qty_tyres"])
-  price_power = {"petrol":4, "fusion":400, "steam":3, "bio":5, "electric":20, "rocket":16, "hamster":3, "thermo":300, "solar":40, "wind":20}
-  cost_primary_power = price_power[record["power_type"]]*int(record["power_units"])
-  cost_backup_power = price_power[record["aux_power_type"]]*int(record["aux_power_units"])
-  price_hamster_booster = 5
-  cost_hamster_booster = price_hamster_booster*int(record["hamster_booster"])
-  price_armour = {"none":0, "wood":40, "aluminium":200, "thinsteel":100, "thicksteel":200, "titanium":290}
-  wheel_value = int(record["qty_wheels"])-4
-  if wheel_value>0:
-      cost_armour = price_armour[record["armour"]]+(price_armour[record["armour"]]*(wheel_value*0.1))
-  else:
-      cost_armour = price_armour[record["armour"]]
-  price_offence = {"none":0, "spike":5, "flame":20, "charge":28, "biohazard":30}
-  cost_offence = price_offence[record["attack"]]*int(record["qty_attacks"])
-  price_fireproof = {"yes":70, "no":0}
-  cost_fireproof = price_fireproof[record["fireproof"]]
-  price_insulated = {"yes":100, "no":0}
-  cost_insulated = price_insulated[record["insulated"]]
-  price_antibiotic = {"yes":90, "no":0}
-  cost_antibiotic = price_antibiotic[record["antibiotic"]]
-  price_banging = {"yes":42, "no":0}
-  cost_banging = price_banging[record["banging"]]
-  total_cost = cost_tyres+cost_primary_power+cost_backup_power+cost_hamster_booster+cost_armour+cost_offence+cost_fireproof+cost_insulated+cost_antibiotic+cost_banging
-  return render_template("buggy.html", buggy = record, cost_tyres=cost_tyres, cost_primary_power=cost_primary_power, cost_backup_power=cost_backup_power, cost_hamster_booster=cost_hamster_booster, cost_armour=cost_armour, cost_offence=cost_offence, cost_fireproof=cost_fireproof, cost_insulated=cost_insulated, cost_antibiotic=cost_antibiotic, cost_banging=cost_banging, total_cost=total_cost)
+  records = cur.fetchall(); 
+  buggies=[]
+  for record in records:
+      buggy={}
+      for k in record.keys():
+          buggy[k]=record[k]
+      price_tyres = {"knobbly":15, "slick":10, "steelband":20, "reactive":40, "maglev":50}
+      buggy['cost_tyres'] = price_tyres[record["tyres"]]*int(record["qty_tyres"])
+      price_power = {"petrol":4, "fusion":400, "steam":3, "bio":5, "electric":20, "rocket":16, "hamster":3, "thermo":300, "solar":40, "wind":20}
+      buggy['cost_primary_power'] = price_power[record["power_type"]]*int(record["power_units"])
+      buggy['cost_backup_power'] = price_power[record["aux_power_type"]]*int(record["aux_power_units"])
+      price_hamster_booster = 5
+      buggy['cost_hamster_booster'] = price_hamster_booster*int(record["hamster_booster"])
+      price_armour = {"none":0, "wood":40, "aluminium":200, "thinsteel":100, "thicksteel":200, "titanium":290}
+      wheel_value = int(record["qty_wheels"])-4
+      if wheel_value>0:
+          buggy['cost_armour'] = price_armour[record["armour"]]+(price_armour[record["armour"]]*(wheel_value*0.1))
+      else:
+          buggy['cost_armour'] = price_armour[record["armour"]]
+      price_offence = {"none":0, "spike":5, "flame":20, "charge":28, "biohazard":30}
+      buggy['cost_offence'] = price_offence[record["attack"]]*int(record["qty_attacks"])
+      price_fireproof = {"yes":70, "no":0}
+      buggy['cost_fireproof'] = price_fireproof[record["fireproof"]]
+      price_insulated = {"yes":100, "no":0}
+      buggy['cost_insulated'] = price_insulated[record["insulated"]]
+      price_antibiotic = {"yes":90, "no":0}
+      buggy['cost_antibiotic'] = price_antibiotic[record["antibiotic"]]
+      price_banging = {"yes":42, "no":0}
+      buggy['cost_banging'] = price_banging[record["banging"]]
+      buggy['total_cost'] = buggy['cost_tyres']+buggy['cost_primary_power']+buggy['cost_backup_power']+buggy['cost_hamster_booster']+buggy['cost_armour']+buggy['cost_offence']+buggy['cost_fireproof']+buggy['cost_insulated']+buggy['cost_antibiotic']+buggy['cost_banging']
+      buggies.append(buggy)
+  return render_template("buggy.html", buggies = buggies)
 
 #------------------------------------------------------------
 # a page for displaying the buggy
 #------------------------------------------------------------
-@app.route('/new')
-def edit_buggy():
-  return render_template("buggy-form.html")
 
 
+@app.route('/edit/<buggy_id>')
+def edit_buggy(buggy_id):
+    con = sql.connect(DATABASE_FILE)
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
+    record = cur.fetchone(); 
+    return render_template("buggy-form.html", buggy=record)
 #------------------------------------------------------------
 # get JSON from current record
 #   this is still probably right, but we won't be
@@ -171,13 +180,13 @@ def summary():
 #   there always being a record to update (because the
 #   student needs to change that!)
 #------------------------------------------------------------
-@app.route('/delete', methods = ['POST'])
-def delete_buggy():
+@app.route('/delete/<buggy_id>', methods = ['POST'])
+def delete_buggy(buggy_id):
   try:
     msg = "deleting buggy"
     with sql.connect(DATABASE_FILE) as con:
       cur = con.cursor()
-      cur.execute("DELETE FROM buggies")
+      cur.execute("DELETE FROM buggies WHERE id=?", (buggy_id))
       con.commit()
       msg = "Buggy deleted"
   except:
@@ -187,6 +196,9 @@ def delete_buggy():
     con.close()
     return render_template("updated.html", msg = msg)
 
+@app.route('/poster')
+def poster():
+    return render_template("poster.html")
 
 if __name__ == '__main__':
    print("start")
