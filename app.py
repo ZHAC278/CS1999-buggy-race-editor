@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3 as sql
+import random
 app = Flask(__name__)
 
 DATABASE_FILE = "database.db"
@@ -155,6 +156,63 @@ def edit_buggy(buggy_id):
     cur.execute("SELECT * FROM buggies WHERE id=?", (buggy_id,))
     record = cur.fetchone(); 
     return render_template("buggy-form.html", buggy=record)
+
+@app.route('/autofill', methods = ['POST'])
+def autofill():
+    if request.method == 'POST':
+        msg=""
+        buggy_id = request.form['id']
+        colour=["red","orange","yellow","green","blue","black","white"]
+        flag_color = random.choice(colour)
+        flag_color_secondary = random.choice(colour)
+        flag=["plain","vstripe","hstripe","dstripe","checker","spot"]
+        flag_pattern = random.choice(flag)
+        number=["0","2","4","6","8","10"]
+        qty_wheels = random.choice(number)
+        qty_tyres = int(qty_wheels) + random.randint(0,10)
+        typetyres=["knobbly","slick","steelband","reactive","maglev"]
+        tyres = random.choice(typetyres)
+        power=["petrol","fusion","steam","bio","electric","rocket","hamster","thermo","solar","wind"]
+        power_type = random.choice(power)
+        power_units = random.randint(0,10)
+        aux_power_type = random.choice(power)
+        aux_power_units = random.randint(0,10)
+        if (aux_power_type == "fusion" or \
+            aux_power_type == "thermo" or \
+            aux_power_type == "solar" or \
+            aux_power_type == "wind"):
+            aux_power_units=1
+        hamster_booster = random.randint(0,10)
+        if (power_type != "hamster" and \
+            aux_power_type != "hamster"):
+            hamster_booster=0
+        typearmour=["none","wood","aluminium","thinsteel","thicksteel","titanium"]
+        armour = random.choice(typearmour)
+        typeattack=["none","spike","flame","biohazard","charge"]
+        attack  = random.choice(typeattack)
+        qty_attacks = random.randint(0, 10)
+        boolean=["yes", "no"]
+        fireproof = random.choice(boolean)
+        insulated = random.choice(boolean)
+        antibiotic = random.choice(boolean)
+        banging = random.choice(boolean)
+        typealgo=["defensive","steady","offensive","titfortat","random"]
+        algo = random.choice(typealgo)
+        try:
+            with sql.connect(DATABASE_FILE) as con:
+                cur = con.cursor()
+                if buggy_id.isdigit(): 
+                    cur.execute("UPDATE buggies set flag_color=?, flag_color_secondary=?, flag_pattern=?, qty_wheels=?, qty_tyres=?, tyres=?, power_type=?, power_units=?, aux_power_type=?, aux_power_units=?, hamster_booster=?, armour=?, attack=?, qty_attacks=?, fireproof=?, insulated=?, antibiotic=?, banging=?, algo=? WHERE id=?", (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo, buggy_id))
+                else:
+                    cur.execute("INSERT INTO buggies (flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(flag_color, flag_color_secondary, flag_pattern, qty_wheels, qty_tyres, tyres, power_type, power_units, aux_power_type, aux_power_units, hamster_booster, armour, attack, qty_attacks, fireproof, insulated, antibiotic, banging, algo))
+                    con.commit()
+                    msg = "Record successfully saved"
+        except Exception as e:
+            con.rollback()
+            msg = "error in update operation" + str(e)
+        finally:
+            con.close()
+        return render_template("updated.html", msg = msg)
 #------------------------------------------------------------
 # get JSON from current record
 #   this is still probably right, but we won't be

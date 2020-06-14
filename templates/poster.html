@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+  .cs1999-tasks {
+    border-top: 1px solid black;
+    margin-top: 4em;
+  }
+  .cs1999-tasks .task {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid black;
+  }
+  .cs1999-tasks .task h2 {
+    border-bottom: 3px solid gray;
+  }
+</style>
+
+  <h1>Burning Rubber</h1>
+  
+  <p>
+  Burning Rubber is a great new app for creating and racing buggies! The simple to use create a 
+  buggy form allows you to choose from a number of different options to make your buggy the fastest 
+  it can be! Don't worry about the race rules, as your buggy can only be saved if it follows them. 
+  Once you've made your buggy, you can view and edit it to your hearts desire. Maybe your desire is 
+  to own a multitude of buggies, you can do that too! Add and delete buggies at any point, to ensure your 
+  fleet is the strongest it can be.
+  </p>
+  <br>
+<section class="cs1999-tasks">
+
+  <h2>Phase 0</h2>
+  <div class="task">
+      <h>GET</h>
+      <p>
+      For this task I forked the code from GitHub and used the git clone function to make a copy. 
+      </p>
+      <p>
+      Once I had a copy on my device, I created a virtual environment to work in and set the environment 
+      into development mode. I also set my username and password so that when I pushed my code I didnt 
+      have to input the same username/password again and again. 
+      </p>
+      <br>
+  </div>
+  <div class="task">
+      <h>RUN</h>
+      <p>
+      After making my copy of the repo, I had to make sure the program ran. to do this I installed Flask on 
+      my device using "pip install flask" and "pip install -r requirements.txt". From here I initialised 
+      the database using "python init.db". After doing this I could successfully run "python app.py"
+      </p>
+      <p>
+      Once I intalled flask and intialised my database, I didn't need to do this again when running the app 
+      unless I changed the database. This meant that startup of the app was significantly quicker after the initial 
+      set up. 
+      </p>
+      <br>
+  </div>
+  <div class="task">
+      <h>CHANGE</h>
+      <p>
+      I changed the title on the index page to ensure the code was doing as it was supposed to. 
+      </p>
+      <p>
+      I used this to practice committing and pushing to git hub. To do this I used "git add (relevant files 
+      that have been changed)", "git commit -m (comment here)" and "git push". 
+      </p>
+      <br>
+  </div>
+  <h2>Phase 1</h2>
+  <div class="task">
+      <h>ADD</h>
+      <p>
+      I added all the specifications to the buggy form. 
+      </p>
+      <p>
+      To do this, first I added all the JSON names into the database so that records could be saved. 
+      Next I created new fields using select and text inputs on the buggy form. From here I went into the 
+      "new" route and pulled data from the table, set it as a variable and sent the data to the show buggy 
+      page. In this page it was just a matter of inputting lines in the table and inserting the data. 
+      </p>
+      <p>
+      To improve this I would want to add different types of inputs, such as number inputs to reduce the amount of 
+      validation needed server side.
+      </p>
+      <br>
+  </div>
+  <div class="task">
+      <h>VALID</h>
+      <p>
+      I added basic validation to most of the fields in the buggy form.
+      </p>
+      <p>
+      To do this I used a lot of "if" statements. Some fields I did not validate as they were a bit 
+      trickier than other fields. For example, flag colours I would need to create a list of valid colours 
+      then loop over them using the input. Whereas any of the inputs that needed a number, it was simple to 
+      validate using the ".isdigit()" function. To let the client know there was an error I sent an error 
+      message to the top of the page and returned the buggy form. 
+      </p>
+      <p>
+      To improve this I would make sure all fields have basic validation.
+      </p>
+      <br>
+  </div>
+  <div class="task">
+      <h>STYLE</h>
+      <p>
+      I used the style sheet to change the look of my app.
+      </p>
+      <p>
+      I did some very basic style changes to my app, I didn't want to overwhelm the client. To do this I 
+      went into the style sheet and changed background colours and button colours to make them more visually 
+      appealing.
+      </p>
+      <p>
+      FIXME
+      </p>
+  </div>
+  <h2>Phase 2</h2>
+  <div class="task">
+      <h>EDIT</h>
+      <p>
+      This task involved filling the buggy form with previously inputted data. 
+      </p>
+      <p>
+      To do this I used the "value" function with the data pulled from the record. This was harder with 
+      drop down menus as they use the "selected" attribute. To use this I needed to put an if statement into 
+      the options. This task worked succesfully until I created multiple buggies in a later phase. Once I 
+      asked the SQL to pull multiple records, this function stopped working. 
+      </p>
+      <p>
+      To improve this I would find a way to input default values while having multiple records and make sure that 
+      drop down lists returned default values. 
+      </p>
+  </div>
+  <div class="task">
+      <h>FORM</h>
+      <p>
+      I set up a grid in the buggy form HTML to make the inputs sit neatly on the page
+      </p>
+  </div>
+  <div class="task">
+      <h>COST</h>
+      <p>
+      I worked out the cost of every individual element and added them together to reach the 
+      total cost of the buggy. All the data was then showed on the buggy so the client can understand 
+      where the cost has come from.
+      </p>
+      <p>
+      To do this I went into the "buggy" route and created dictionaries of all the different costs, relevant to their field. 
+      After this I pulled data for the number of item that was chosen and multiplied the two, set it into a cost variable and sent the 
+      data to the show buggy page. For armour I also multiplied it by the % increase if there were more than 4 wheels. 
+      </p>
+      <p>
+      To improve this I would create a page that only admins could edit, where prices of each different 
+      item could be edited. At the moment if prices were to change, the numbers would have to be changed in the code. 
+      </p>
+  </div>
+  <div class="task">
+      <h>RULES</h>
+      <p>
+      I added a bit more validation to the buggy form to ensure rules are followed.
+      </p>
+      <p>
+      Similar to basic validation this used a lot of "if" statements, this time I also used "and" and "or" attributes 
+      to reduce the number of lines of code. I reported the problems in the same way as I reported problems in basic 
+      validatione with an error message and returning the buggy form page. I had a few issues surrounding the wheels/tyres 
+      validation as they had two different kinds of validation on them however this was easily fixed. 
+      </p>
+      <p>
+      To improve this I would want to save the record, but potentially in a different database to ensure illegal buggies 
+      couldn't accidentally be entered into a race. By saving the data it means that the client wouldn't have to repeat the 
+      whole form again (after the issue with 2-edit). 
+      </p>
+  </div>
+  <h2>Phase 3</h2>
+  <div class="task">
+      <h>ENV</h>
+      <p>
+      I used the development function throughout the developement of this app as it meant I didn't have to keep restarting the app with 
+      every change to the code. It also helps that when the code isn't correct and the app crashes, it tells you where the code is breaking.
+      </p>
+  </div>
+  <div class="task">
+      <h>AUTOFILL</h>
+      <p>
+      I made a new route for auto fill, that used the "random" function to choose specifications.
+      </p>
+      <p>
+      Once I created the new route I copied the code to create a new buggy into the autofill route. 
+      from there I changed all the inputs to random selections using the "random.choice()" and "random.randint()" 
+      funtions. 
+      </p>
+      <p>
+      The issues I had with this task were that once I created the button and route, it kept trying to use the "get" method which gave me the error 
+      "the method is not allowed for the requested URL". After changing the button to a "post" method, I hoped this would fix my problem however I 
+      was still getting the same error. The error was fixed by rearranging the form action.
+      </p>
+      <p>
+      To improve this I would want to make it so that you could input a cost into the top of the 
+      form and the random function would create a buggy within that cost. 
+  </div>
+  <div class="task">
+      <h>MULTI</h>
+      <p>
+      This easily took the most of my time during this project. This task could be split into three parts, adding new buggies to the database, 
+      being able to update different buggies and swaap between buggies. 
+      </p>
+      <p>
+      To create a new buggy in the "new" route, I added a command that tells the database to insert a new set of data rather than updating 
+      the previous data. Then to show the buggy I went into the "buggy" route and told the code to fetch all of the data, instead of just one set. 
+      In the show buggy page I then looped through all the buggies to show all saved buggies. 
+      </p>
+      <p>
+      To edit a previously created buggy I started by creating a button in the show buggy HTML linking to the page /edit/buggy_id. From here I went into the 
+      python and created a new route for /edit/buggy_id. In this route I made sure that it returned the buggy form page with the data from that given buggy using the value 
+      attribute on the buggy form. 
+      </p>
+      <p>
+      I came up with a few errors in this task, the main problem being sending the correct costs assosiated with each buggy. To do this I created a dictionary with the costs 
+      of each buggy, which then got appended into a list and sent to the database along with the selections. 
+  </div>
+  <div class="task">
+      <h>DELETE</h>
+      <p>
+      I used what I learnt creating the edit route to create a delete route. 
+      </p>
+      <p>
+      After creating a delete button on the show buggy page, I edited the delete route to include the relevant buggy id. 
+      After running the program I got an error saying the URL could not complete the method, so I looked into the error in GIT and it ws trying to use a get 
+      method to delete. To fix this I used a different way of showing a button that made the method push instead of get. 
+      </p>
+  </div>
+  <div class="task">
+      <h>FLAG</h>
+      <p>
+      Although I have yet to start this task, I have an idea of how I would complete it. I would create an empty grid within the HTML page, with two classes called colour 1 and colour 2 that pass in the colours chosen in the form. 
+      To ensure the colours match HTML colours, I would create a dictionary that lists each available colour with a HTML colour similar. From here I would create the grids within the python code, and use if statements to pass the 
+      correct flag into the show buggy page. 
+      </p>
+  </div>
+  <div class="task">
+      <h>TESTS</h>
+      <p>
+      FIXME
+      </p>
+  </div>
+</selection>
+  <h2>Conclusion</h2>
+  <p>
+  At the end of this process I feel like I have created a better functioning buggy race app. There were a lot of lessons to be taken away, 
+  including a lot of HTML and CSS language. There are many ways I could improve my code, not limited to including more validation, selecting the correct 
+  drop down boxes when editing (remembering the data) and making a more accesable page.
+  </p>
+
+  
+    <a href="/" class="button">home</a>
+  </p>
+
+{% endblock %}

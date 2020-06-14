@@ -15,8 +15,19 @@
     <style>
         .grid-container {
           display: grid;
-          grid-template-columns: repeat(2, 200px);
-          grid-template-rows: repeat(19, 60px);   
+          grid-template-columns: repeat(3, 200px);
+          grid-template-rows: repeat(20, 80px);   
+        }
+        .button{
+        border:1px solid black;
+        padding:0.5em;
+        margin:0.5em;
+        border-radius: 0.25em;
+        text-decoration: none;
+        background-color: white;
+        color: black;
+        box-shadow: 5px 5px 5px #999999;
+        position: left
         }
     </style>
   </head>
@@ -35,11 +46,14 @@
   <div class="grid-container">
     <label for = ID>ID</label>
     <input type="text" name="id" value="{{ buggy['id'] }}"/>
+    <small>Please don't enter anything here!</small>
     <label for="flag_color">Colour of flag:</label>
     <input type="text" name="flag_color" value="{{ buggy['flag_color'] }}"/>
+    <small>Choose from red, orange, yellow, green, blue, purple, black or white</small>
     <label for="flag_color_secondary">Second colour on flag:</label>
     <input type="text" name="flag_color_secondary" value="{{ buggy['flag_color_secondary'] }}"/>
-    <label for="flag_pattern">Type of tyres:</label>
+    <small>Choose from red, orange, yellow, green, blue, purple, black or white</small>
+    <label for="flag_pattern">Flag pattern:</label>
     <select name="flag_pattern" id="flag_pattern">
         <option value="plain">Plain</option>
         <option value="vstripe">V Stripe</option>
@@ -48,10 +62,13 @@
         <option value="checker">Checkerboard</option>
         <option value="spot">Spot</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="qty_wheels">Number of wheels:</label>
     <input type="text" name="qty_wheels" value="{{ buggy['qty_wheels'] }}"/>
+    <small>Please insert an even number</small>
     <label for="qty_tyres">Number of tyres:</label>
     <input type="text" name="qty_tyres" value="{{ buggy['qty_tyres'] }}" />
+    <small>Please insert a number, greater than or equal to the number of wheels</small>
     <label for="tyres">Type of tyres:</label>
     <select name="tyres" id="tyres" >
         <option value="knobbly">Knobbly</option>
@@ -60,6 +77,7 @@
         <option value="reactive">Reactive</option>
         <option value="maglev">Magnetic Levitation</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="power_type">Primary power source:</label>
     <select name="power_type" id="power_type">
         <option value="petrol">Petrol</option>
@@ -73,8 +91,10 @@
         <option value="solar">Solar</option>
         <option value="wind">Wind</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="power_units">Number of power units:</label>
     <input type="text" name="power_units" value="{{ buggy['power_units'] }}"/>
+    <small>You can only have one unit of fusion, thermal, wind or solar power</small>
     <label for="aux_power_type">Backup power source:</label>
     <select name="aux_power_type" id="aux_power_type">
         <option value="petrol">Petrol</option>
@@ -88,10 +108,13 @@
         <option value="solar">Solar</option>
         <option value="wind">Wind</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="aux_power_units">Number of backup power units:</label>
     <input type="text" name="aux_power_units" value="{{ buggy['aux_power_units'] }}" />
+    <small>You can only have one unit of fusion, thermal, wind or solar power</small>
     <label for="hamster_booster">Number of hamster boosters:</label>
     <input type="text" name="hamster_booster" value="{{ buggy['aux_power_units'] }}" />
+    <small>Hamster boosters can only be used with hamster power!</small>
     <label for="armour">Type of armour:</label>
     <select name="armour" id="armour">
         <option value="none">None</option>
@@ -101,6 +124,7 @@
         <option value="thicksteel">Thick Steel</option>
         <option value="titanium">Titanium</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="attack">Offensive Capability:</label>
     <select name="attack" id="attack">
         <option value="none">None</option>
@@ -109,28 +133,34 @@
         <option value="charge">Charge</option>
         <option value="biohazard">Biohazard</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="qty_attacks">Number of attacks in race:</label>
     <input type="text" name="qty_attacks" value="{{ buggy['qty_attacks'] }}"/>
+    <small>Please insert a number</small>
     <label for="fireproof">Fireproof?:</label>
     <select name="fireproof" id="fireproof">
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="insulated">Insulated?:</label>
     <select name="insulated" id="insulated">
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="antibiotic">Antibiotic?:</label>
     <select name="antibiotic" id="antibiotic">
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="banging">Banging sound system?:</label>
     <select name="banging" id="banging">
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
+    <small>Choose from the drop down menu</small>
     <label for="algo">Race computer algorithm:</label>
     <select name="algo" id="algo">
         <option value="defensive">Defensive</option>
@@ -138,10 +168,15 @@
         <option value="offensive">Offensive</option>
         <option value="random">Random</option>
     </select>
-    
-    <input type="submit" class="button">
-  </form>
+    <small>Choose from the drop down menu</small>
+   <!--form action="/autofill" method="post"-->
+     <div class ="button">
+     <button type="submit" name="autofill" value="autofill" class="btn-link" formmethod="post" formaction="/autofill">Autofill</button>
+     </div>
+    <!--a href="/autofill" class="button" method="post">Autofill</a-->
+    <input type="submit" class="button"></input>
+  </form> 
   <p>
-    <a href="/" class="button">home</a>
+    <a href="/" class="button">Home</a>
    </p>
 {% endblock %}
